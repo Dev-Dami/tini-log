@@ -1,5 +1,5 @@
 {
-  "name": "teeny-logger",
+  "name": "tini-log",
   "version": "0.1.0-beta",
   "description": "A minimal, fast logging library for Node.js.",
   "main": "./dist/index.js",
@@ -7,12 +7,12 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Dev-Dami/teeny-logger.git"
+    "url": "git+https://github.com/Dev-Dami/tini-log.git"
   },
   "keywords": [
     "logging",
@@ -25,25 +25,28 @@
   "license": "MIT",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/Dev-Dami/teeny-logger/issues"
+    "url": "https://github.com/Dev-Dami/tini-log/issues"
   },
-  "homepage": "https://github.com/Dev-Dami/teeny-logger#readme",
+  "homepage": "https://github.com/Dev-Dami/tini-log#readme",
   "dependencies": {
     "@types/node": "^24.10.0",
     "typescript": "^5.9.3"
   },
   "files": [
     "dist/**/*",
-    "README.MD",
-    "API.md",
-    "examples.md",
+    "README.md",
+    "docs/**/*",
+    "CONTRIBUTING.md",
     "LICENSE"
   ],
   "devDependencies": {
+    "@types/jest": "^30.0.0",
     "@types/node": "^24.10.0",
     "@typescript-eslint/eslint-plugin": "^8.46.4",
     "@typescript-eslint/parser": "^8.46.4",
     "eslint": "^9.39.1",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.5",
     "typescript": "^5.9.3"
   }
 }

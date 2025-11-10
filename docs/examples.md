@@ -1,13 +1,13 @@
 # Examples
 
-This section provides more advanced usage examples for `teeny-logger`.
+This section provides more advanced usage examples for `tini-log`.
 
 ## JSON Structured Logging
 
 You can configure the logger to output logs in JSON format. This is useful for integrating with log management systems.
 
 ```typescript
-import { Logger } from 'teeny-logger';
+import { Logger } from 'tini-log';
 
 const logger = new Logger({
   json: true,
@@ -30,10 +30,10 @@ logger.setFormat('json');
 
 ## Using the Global Logger
 
-`teeny-logger` provides a global logger instance that can be accessed from anywhere in your application.
+`tini-log` provides a global logger instance that can be accessed from anywhere in your application.
 
 ```typescript
-import { Logger } from 'teeny-logger';
+import { Logger } from 'tini-log';
 
 // Configure the global logger
 Logger.global.setLevel('debug');
@@ -49,7 +49,7 @@ function doSomething() {
 The `FileTransport` can be configured to automatically rotate log files when they reach a certain size.
 
 ```typescript
-import { Logger } from 'teeny-logger';
+import { Logger } from 'tini-log';
 
 const logger = new Logger({
   transports: [

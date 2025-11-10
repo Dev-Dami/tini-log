@@ -1,6 +1,6 @@
 # API Reference
 
-This section provides a detailed reference for the `teeny-logger` API.
+This section provides a detailed reference for the `tini-log` API.
 
 ## Logger Class
 
@@ -25,7 +25,7 @@ Creates a new logger instance.
 A static property that provides a global logger instance. This is useful for quick setups or for logging from different parts of your application without passing the logger instance around.
 
 ```typescript
-import { Logger } from 'teeny-logger';
+import { Logger } from 'tini-log';
 
 Logger.global.info('This is a global log message.');
 ```
@@ -69,14 +69,14 @@ logger.setFormat('json');
 Adds an additional transport to the logger at runtime.
 
 ```typescript
-import { FileTransport } from 'teeny-logger';
+import { FileTransport } from 'tini-log';
 
 logger.addTransport(new FileTransport({ path: './logs/another.log' }));
 ```
 
 ## LogLevel Type
 
-The `LogLevel` type defines the different levels of logging available in `teeny-logger`.
+The `LogLevel` type defines the different levels of logging available in `tini-log`.
 
 - `'debug'`
 - `'info'`

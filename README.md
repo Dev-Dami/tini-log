@@ -1,11 +1,11 @@
-# teeny-logger
+# tini-log
 
 [![npm version](https://badge.fury.io/js/teeny-logger.svg)](https://badge.fury.io/js/teeny-logger)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A minimal, fast, and feature-rich logging library for Node.js.
 
-`teeny-logger` is designed to be a lightweight and easy-to-use logger with support for multiple transports, customizable formatting, and dynamic log levels.
+`tini-log` is designed to be a lightweight and easy-to-use logger with support for multiple transports, customizable formatting, and dynamic log levels.
 
 ## Features
 
@@ -19,13 +19,13 @@ A minimal, fast, and feature-rich logging library for Node.js.
 ## Installation
 
 ```bash
-npm install teeny-logger
+npm install tini-log
 ```
 
 ## Usage
 
 ```typescript
-import { Logger } from 'teeny-logger';
+import { Logger } from 'tini-log';
 
 // Create a logger instance
 const logger = new Logger({

@@ -1,6 +1,6 @@
 # Transports
 
-Transports are responsible for sending log messages to a specific destination, such as the console or a file. `teeny-logger` comes with two built-in transports: `ConsoleTransport` and `FileTransport`.
+Transports are responsible for sending log messages to a specific destination, such as the console or a file. `tini-log` comes with two built-in transports: `ConsoleTransport` and `FileTransport`.
 
 ## Console Transport
 
@@ -15,7 +15,7 @@ The `ConsoleTransport` has one option:
 ### Usage
 
 ```typescript
-import { Logger } from 'teeny-logger';
+import { Logger } from 'tini-log';
 
 const logger = new Logger({
   transports: [
@@ -42,7 +42,7 @@ The `FileTransport` logs messages to a file. It also supports automatic file rot
 ### Usage
 
 ```typescript
-import { Logger } from 'teeny-logger';
+import { Logger } from 'tini-log';
 
 const logger = new Logger({
   transports: [
@@ -63,9 +63,9 @@ const logger = new Logger({
 You can create your own custom transports by implementing the `Transport` interface.
 
 ```typescript
-import { Transport } from 'teeny-logger';
-import { LogData } from 'teeny-logger/dist/core/Logger';
-import { Formatter } from 'teeny-logger/dist/core/Formatter';
+import { Transport } from 'tini-log';
+import { LogData } from 'tini-log/dist/core/Logger';
+import { Formatter } from 'tini-log/dist/core/Formatter';
 
 class MyCustomTransport implements Transport {
   write(data: LogData, formatter: Formatter): void {

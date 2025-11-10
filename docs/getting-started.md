@@ -1,13 +1,13 @@
-# Getting Started with teeny-logger
+tini-log
 
-This guide will walk you through the basics of using `teeny-logger` in your Node.js application.
+This guide will walk you through the basics of using `tini-log` in your Node.js application.
 
 ## Installation
 
 First, install the library using npm:
 
 ```bash
-npm install teeny-logger
+npm install tini-log
 ```
 
 ## Basic Usage
@@ -15,7 +15,7 @@ npm install teeny-logger
 To start logging, you need to create an instance of the `Logger` class.
 
 ```typescript
-import { Logger } from 'teeny-logger';
+import { Logger } from 'tini-log';
 
 // Create a logger with default options
 const logger = new Logger();
@@ -26,14 +26,14 @@ logger.warn('This is a warning.');
 logger.error('This is an error.');
 ```
 
-By default, `teeny-logger` will log messages with a level of `info` or higher to the console.
+By default, `tini-log` will log messages with a level of `info` or higher to the console.
 
 ## Configuration
 
 You can customize the logger by passing a configuration object to the constructor.
 
 ```typescript
-import { Logger } from 'teeny-logger';
+import { Logger } from 'tini-log';
 
 const logger = new Logger({
   level: 'debug', // Log all messages from debug level and above
