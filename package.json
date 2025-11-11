@@ -5,7 +5,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "node esbuild.config.js && tsc --emitDeclarationOnly --outDir dist",
     "dev": "tsc --watch",
     "test": "jest",
     "prepublishOnly": "npm run build"
@@ -33,6 +33,7 @@
     "@types/node": "^24.10.0",
     "@typescript-eslint/eslint-plugin": "^8.46.4",
     "@typescript-eslint/parser": "^8.46.4",
+    "esbuild": "^0.27.0",
     "eslint": "^9.39.1",
     "jest": "^30.2.0",
     "ts-jest": "^29.4.5",
@@ -44,6 +45,5 @@
     "docs/**/*",
     "CONTRIBUTING.md",
     "LICENSE"
-  ],
-  "dependencies": {}
+  ]
 }

@@ -1,11 +1,11 @@
-# tini-log
+# dd-tinylog
 
 [![npm version](https://badge.fury.io/js/teeny-logger.svg)](https://badge.fury.io/js/dd-tinylog)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A minimal, fast, and feature-rich logging library for Node.js.
 
-`tini-log` is designed to be a dead simple lightweight and easy-to-use logger with support for multiple transports, customizable formatting, and dynamic log levels.
+`dd-tinylog` is designed to be a dead simple lightweight and easy-to-use logger with support for multiple transports, customizable formatting, and dynamic log levels.
 
 ## Features
 
