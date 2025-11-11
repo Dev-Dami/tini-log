@@ -16,6 +16,8 @@ The `ConsoleTransport` has one option:
 
 ```typescript
 import { Logger } from 'dd-tinylog';
+// CommonJS
+const { Logger } = require('dd-tinylog');
 
 const logger = new Logger({
   transports: [
@@ -43,6 +45,8 @@ The `FileTransport` logs messages to a file. It also supports automatic file rot
 
 ```typescript
 import { Logger } from 'dd-tinylog';
+// CommonJS
+const { Logger } = require('dd-tinylog');
 
 const logger = new Logger({
   transports: [
@@ -66,6 +70,8 @@ You can create your own custom transports by implementing the `Transport` interf
 import { Transport } from 'dd-tinylog';
 import { LogData } from 'dd-tinylog/dist/core/Logger';
 import { Formatter } from 'dd-tinylog/dist/core/Formatter';
+// CommonJS
+const { FileTransport } = require('dd-tinylog');
 
 class MyCustomTransport implements Transport {
   write(data: LogData, formatter: Formatter): void {

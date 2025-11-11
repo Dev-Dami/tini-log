@@ -8,6 +8,8 @@ You can configure the logger to output logs in JSON format. This is useful for i
 
 ```typescript
 import { Logger } from 'dd-tinylog';
+// CommonJS
+const { Logger } = require('dd-tinylog');
 
 const logger = new Logger({
   json: true,
@@ -34,6 +36,8 @@ logger.setFormat('json');
 
 ```typescript
 import { Logger } from 'dd-tinylog';
+// CommonJS
+const { Logger } = require('dd-tinylog');
 
 // Configure the global logger
 Logger.global.setLevel('debug');
@@ -50,6 +54,8 @@ The `FileTransport` can be configured to automatically rotate log files when the
 
 ```typescript
 import { Logger } from 'dd-tinylog';
+// CommonJS
+const { FileTransport } = require('dd-tinylog');
 
 const logger = new Logger({
   transports: [
@@ -77,6 +83,8 @@ You can configure the logger to add a custom prefix and/or a timestamp to your l
 
 ```typescript
 import { Logger } from 'dd-tinylog';
+// CommonJS
+const { Logger } = require('dd-tinylog');
 
 const prefixedLogger = new Logger({
   level: 'info',

@@ -27,7 +27,10 @@ npm install dd-tinylog
 ## Usage
 
 ```typescript
+// ESM
 import { Logger } from 'dd-tinylog';
+// CommonJS
+const { Logger } = require("dd-tinylog");
 
 // Create a logger instance
 const logger = new Logger({
@@ -52,7 +55,7 @@ logger.boring('This message will be logged but not colored');
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](./LICENSE] file for details.
+This project is licensed under the MIT License. See the [LICENSE](/LICENSE) file for details.
 
 ## Uses for this Library
 

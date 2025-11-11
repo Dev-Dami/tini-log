@@ -18,7 +18,7 @@
     // Other Outputs
     "sourceMap": false,
     "declaration": true,
-    "declarationMap": true,
+    "declarationMap": false,
 
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,

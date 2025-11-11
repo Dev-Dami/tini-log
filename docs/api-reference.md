@@ -27,7 +27,10 @@ Creates a new logger instance.
 A static property that provides a global logger instance. This is useful for quick setups or for logging from different parts of your application without passing the logger instance around.
 
 ```typescript
+// ESM
 import { Logger } from 'dd-tinylog';
+// CommonJS
+const { Logger } = require("dd-tinylog");
 
 Logger.global.info('This is a global log message.');
 ```
@@ -79,7 +82,10 @@ logger.setFormat('json');
 Adds an additional transport to the logger at runtime.
 
 ```typescript
+// ESM
 import { FileTransport } from 'dd-tinylog';
+// CommonJS
+const { FileTransport } = require('dd-tinylog');
 
 logger.addTransport(new FileTransport({ path: './logs/another.log' }));
 ```

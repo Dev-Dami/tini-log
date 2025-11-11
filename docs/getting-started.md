@@ -16,6 +16,8 @@ To start logging, you need to create an instance of the `Logger` class.
 
 ```typescript
 import { Logger } from 'dd-tinylog';
+// CommonJS
+const { Logger } = require('dd-tinylog');
 
 // Create a logger with default options
 const logger = new Logger();
@@ -36,6 +38,8 @@ You can customize the logger by passing a configuration object to the constructo
 
 ```typescript
 import { Logger } from 'dd-tinylog';
+// CommonJS
+const { Logger } = require('dd-tinylog');
 
 const logger = new Logger({
   level: 'debug', // Log all messages from debug level and above

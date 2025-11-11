@@ -1,6 +1,6 @@
 {
   "name": "dd-tinylog",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "A minimal, fast logging library for Node.js.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -41,9 +41,6 @@
   },
   "files": [
     "dist/**/*",
-    "README.md",
-    "docs/**/*",
-    "CONTRIBUTING.md",
-    "LICENSE"
+    "README.md"
   ]
 }
