@@ -6,18 +6,26 @@ export interface FormatterOptions {
   colorize?: boolean;
   json?: boolean;
   timestampFormat?: string;
+  timestamp?: boolean;
 }
 
 export class Formatter {
   private colorize: boolean;
   private json: boolean;
   private timestampFormat: string;
+  private timestamp: boolean;
 
   constructor(options: FormatterOptions = {}) {
-    const { colorize = true, json = false, timestampFormat = 'YYYY-MM-DD HH:mm:ss' } = options;
+    const {
+      colorize = true,
+      json = false,
+      timestampFormat = "YYYY-MM-DD HH:mm:ss",
+      timestamp = false,
+    } = options;
     this.colorize = colorize;
     this.json = json;
     this.timestampFormat = timestampFormat;
+    this.timestamp = timestamp;
   }
 
   format(data: LogData): string {
@@ -29,29 +37,48 @@ export class Formatter {
   }
 
   private formatAsJson(data: LogData): string {
-    const formattedData = {
-      timestamp: data.timestamp.toISOString(),
+    const formattedData: any = {
       level: data.level,
       message: data.message,
       ...data.metadata,
     };
+
+    if (this.timestamp) {
+      formattedData.timestamp = data.timestamp.toISOString();
+    }
+
+    if (data.prefix) {
+      formattedData.prefix = data.prefix;
+    }
+
     return JSON.stringify(formattedData);
   }
 
   private formatAsText(data: LogData): string {
-    const timestamp = TimeUtil.format(data.timestamp, this.timestampFormat);
+    let output = "";
+    if (this.timestamp) {
+      const timestamp = TimeUtil.format(data.timestamp, this.timestampFormat);
+      output += `[${timestamp}] `;
+    }
+
     let level = data.level.toUpperCase();
-    
+
     if (this.colorize) {
       level = ColorUtil.colorize(level, data.level);
     }
-    
-    let output = `[${timestamp}] ${level} - ${data.message}`;
-    
+
+    output += `${level} - `;
+
+    if (data.prefix) {
+      output += `${data.prefix} `;
+    }
+
+    output += data.message;
+
     if (data.metadata) {
       output += ` ${JSON.stringify(data.metadata)}`;
     }
-    
+
     return output;
   }
 

@@ -10,6 +10,8 @@ export interface LoggerOptions {
   json?: boolean;
   transports?: TransportOptions[];
   timestampFormat?: string;
+  prefix?: string;
+  timestamp?: boolean;
 }
 
 export interface LogData {
@@ -17,6 +19,7 @@ export interface LogData {
   message: string;
   timestamp: Date;
   metadata?: Record<string, any> | undefined;
+  prefix?: string;
 }
 
 export class Logger {
@@ -25,6 +28,9 @@ export class Logger {
   private formatter: Formatter;
   private static _global: Logger;
 
+  prefix: string;
+  timestamp: boolean;
+
   constructor(options: LoggerOptions = {}) {
     const {
       level = "info",
@@ -32,9 +38,13 @@ export class Logger {
       json = false,
       transports = [{ type: "console" }],
       timestampFormat = "YYYY-MM-DD HH:mm:ss",
+      prefix = "",
+      timestamp = false,
     } = options;
 
     this.level = level;
+    this.prefix = prefix;
+    this.timestamp = timestamp;
     this.formatter = new Formatter({ colorize, json, timestampFormat });
 
     // Init transports
@@ -53,7 +63,14 @@ export class Logger {
   }
 
   private shouldLog(level: LogLevel): boolean {
-    const levels: LogLevel[] = ["debug", "info", "warn", "error"];
+    const levels: LogLevel[] = [
+      "silent",
+      "boring",
+      "debug",
+      "info",
+      "warn",
+      "error",
+    ];
     const currentLevelIndex = levels.indexOf(this.level);
     const messageLevelIndex = levels.indexOf(level);
 
@@ -69,11 +86,17 @@ export class Logger {
       return;
     }
 
+    // Donot log 'silent' level logs at all
+    if (level === "silent") {
+      return;
+    }
+
     const logData: LogData = {
       level,
       message,
       timestamp: new Date(),
       metadata,
+      prefix: this.prefix,
     };
 
     for (const transport of this.transports) {
