@@ -1,7 +1,11 @@
 import { LogLevel } from "./LogLevel";
 import { Formatter } from "./Formatter";
-import { Transport } from "../transports/Transport";
-import { ConsoleTransport } from "../transports/ConsoleTransport";
+import {
+  Transport,
+  ConsoleTransport,
+  FileTransport,
+  FileTransportOptions,
+} from "../transports";
 import { TransportOptions } from "../types";
 
 export interface LoggerOptions {
@@ -45,7 +49,12 @@ export class Logger {
     this.level = level;
     this.prefix = prefix;
     this.timestamp = timestamp;
-    this.formatter = new Formatter({ colorize, json, timestampFormat });
+    this.formatter = new Formatter({
+      colorize,
+      json,
+      timestampFormat,
+      timestamp,
+    });
 
     // Init transports
     for (const transportOption of transports) {
@@ -54,8 +63,21 @@ export class Logger {
           colorize: transportOption.options?.colorize ?? colorize,
         });
         this.transports.push(consoleTransport);
+      } else if (transportOption.type === "file") {
+        if (transportOption.options?.path) {
+          const fileOptions: FileTransportOptions = {
+            path: transportOption.options.path,
+          };
+          if (transportOption.options.maxSize !== undefined) {
+            fileOptions.maxSize = transportOption.options.maxSize;
+          }
+          if (transportOption.options.maxFiles !== undefined) {
+            fileOptions.maxFiles = transportOption.options.maxFiles;
+          }
+          const fileTransport = new FileTransport(fileOptions);
+          this.transports.push(fileTransport);
+        }
       }
-      // Additional transport types would be added here
     }
     if (!Logger._global) {
       Logger._global = this;
@@ -118,6 +140,14 @@ export class Logger {
 
   error(message: string, metadata?: Record<string, any>): void {
     this.log("error", message, metadata);
+  }
+
+  silent(message: string, metadata?: Record<string, any>): void {
+    this.log("silent", message, metadata);
+  }
+
+  boring(message: string, metadata?: Record<string, any>): void {
+    this.log("boring", message, metadata);
   }
 
   setLevel(level: LogLevel): void {

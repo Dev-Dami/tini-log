@@ -20,12 +20,11 @@ export class FileTransport implements Transport {
       path: filePath,
       maxSize = 10 * 1024 * 1024,
       maxFiles = 5,
-    } = options; // 10MB default
+    } = options;
     this.filePath = filePath;
     this.maxSize = maxSize;
     this.maxFiles = maxFiles;
 
-    // Ensure the directory exists
     const dir = path.dirname(this.filePath);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
