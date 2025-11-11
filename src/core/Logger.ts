@@ -6,7 +6,7 @@ import {
   FileTransport,
   FileTransportOptions,
 } from "../transports";
-import { TransportOptions } from "../types";
+import { TransportOptions, LogData } from "../types";
 
 export interface LoggerOptions {
   level?: LogLevel;
@@ -16,20 +16,16 @@ export interface LoggerOptions {
   timestampFormat?: string;
   prefix?: string;
   timestamp?: boolean;
-}
-
-export interface LogData {
-  level: LogLevel;
-  message: string;
-  timestamp: Date;
-  metadata?: Record<string, any> | undefined;
-  prefix?: string;
+  context?: Record<string, any>;
+  parent?: Logger;
 }
 
 export class Logger {
   private level: LogLevel;
   private transports: Transport[] = [];
   private formatter: Formatter;
+  private context: Record<string, any>;
+  private parent: Logger | undefined;
   private static _global: Logger;
 
   prefix: string;
@@ -37,32 +33,68 @@ export class Logger {
 
   constructor(options: LoggerOptions = {}) {
     const {
-      level = "info",
+      level,
       colorize = true,
       json = false,
-      transports = [{ type: "console" }],
+      transports = [],
       timestampFormat = "YYYY-MM-DD HH:mm:ss",
-      prefix = "",
-      timestamp = false,
+      prefix,
+      timestamp,
+      context = {},
+      parent,
     } = options;
 
-    this.level = level;
-    this.prefix = prefix;
-    this.timestamp = timestamp;
-    this.formatter = new Formatter({
-      colorize,
-      json,
-      timestampFormat,
-      timestamp,
-    });
+    this.parent = parent; // Set parent
+    this.context = { ...context }; // Init context
 
-    // Init transports
-    for (const transportOption of transports) {
+    if (this.parent) {
+      this.level = level ?? this.parent.level;
+      this.prefix = prefix ?? this.parent.prefix;
+      this.timestamp = timestamp ?? this.parent.timestamp;
+      this.transports =
+        transports.length > 0
+          ? this.initTransports(transports, colorize)
+          : this.parent.transports;
+      this.formatter = new Formatter({
+        colorize: colorize ?? this.parent.formatter.isColorized(),
+        json: json ?? this.parent.formatter.isJson(),
+        timestampFormat:
+          timestampFormat ?? this.parent.formatter.getTimestampFormat(),
+        timestamp: timestamp ?? this.parent.formatter.hasTimestamp(),
+      });
+      this.context = { ...this.parent.context, ...this.context };
+    } else {
+      this.level = level ?? "info";
+      this.prefix = prefix ?? "";
+      this.timestamp = timestamp ?? false;
+      this.transports = this.initTransports(
+        transports.length > 0 ? transports : [{ type: "console" }],
+        colorize,
+      );
+      this.formatter = new Formatter({
+        colorize,
+        json,
+        timestampFormat,
+        timestamp: this.timestamp,
+      });
+    }
+
+    if (!Logger._global) {
+      Logger._global = this;
+    }
+  }
+
+  private initTransports(
+    transportOptions: TransportOptions[],
+    defaultColorize: boolean,
+  ): Transport[] {
+    const initializedTransports: Transport[] = [];
+    for (const transportOption of transportOptions) {
       if (transportOption.type === "console") {
         const consoleTransport = new ConsoleTransport({
-          colorize: transportOption.options?.colorize ?? colorize,
+          colorize: transportOption.options?.colorize ?? defaultColorize,
         });
-        this.transports.push(consoleTransport);
+        initializedTransports.push(consoleTransport);
       } else if (transportOption.type === "file") {
         if (transportOption.options?.path) {
           const fileOptions: FileTransportOptions = {
@@ -75,13 +107,15 @@ export class Logger {
             fileOptions.maxFiles = transportOption.options.maxFiles;
           }
           const fileTransport = new FileTransport(fileOptions);
-          this.transports.push(fileTransport);
+          initializedTransports.push(fileTransport);
+        }
+      } else if (transportOption.type === "custom") {
+        if (transportOption.instance) {
+          initializedTransports.push(transportOption.instance);
         }
       }
     }
-    if (!Logger._global) {
-      Logger._global = this;
-    }
+    return initializedTransports;
   }
 
   private shouldLog(level: LogLevel): boolean {
@@ -113,11 +147,14 @@ export class Logger {
       return;
     }
 
+    const mergedMetadata = { ...this.context, ...metadata };
+
     const logData: LogData = {
       level,
       message,
       timestamp: new Date(),
-      metadata,
+      metadata:
+        Object.keys(mergedMetadata).length > 0 ? mergedMetadata : undefined,
       prefix: this.prefix,
     };
 
@@ -162,10 +199,18 @@ export class Logger {
     this.transports.push(transport);
   }
 
+  getTimestampSetting(): boolean {
+    return this.timestamp;
+  }
+
   static get global(): Logger {
     if (!Logger._global) {
       Logger._global = new Logger();
     }
     return Logger._global;
+  }
+
+  createChild(options: LoggerOptions = {}): Logger {
+    return new Logger({ ...options, parent: this });
   }
 }

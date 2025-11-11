@@ -1,4 +1,4 @@
-import { LogData } from './Logger';
+import { LogData } from '../types';
 import { TimeUtil } from '../utils/TimeUtil';
 import { ColorUtil } from '../utils/ColorUtil';
 
@@ -84,5 +84,21 @@ export class Formatter {
 
   setJson(json: boolean): void {
     this.json = json;
+  }
+
+  isColorized(): boolean {
+    return this.colorize;
+  }
+
+  isJson(): boolean {
+    return this.json;
+  }
+
+  getTimestampFormat(): string {
+    return this.timestampFormat;
+  }
+
+  hasTimestamp(): boolean {
+    return this.timestamp;
   }
 }

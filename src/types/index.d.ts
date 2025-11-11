@@ -1,13 +1,23 @@
-import { LogLevel } from '../core/LogLevel';
+import { LogLevel } from "../core/LogLevel";
+import { Transport } from "../transports/Transport";
+
+export interface LogData {
+  level: LogLevel;
+  message: string;
+  timestamp: Date;
+  metadata?: Record<string, any> | undefined;
+  prefix?: string;
+}
 
 export interface TransportOptions {
-  type: 'console' | 'file';
+  type: "console" | "file" | "custom";
   options?: {
     path?: string;
     colorize?: boolean;
     maxSize?: number;
     maxFiles?: number;
   };
+  instance?: Transport;
 }
 
 export interface LoggerConfig {

@@ -1,5 +1,5 @@
 import { Transport } from "./Transport";
-import { LogData } from "../core/Logger";
+import { LogData } from "../types";
 import { Formatter } from "../core/Formatter";
 
 export interface ConsoleTransportOptions {
