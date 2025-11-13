@@ -24,7 +24,6 @@ export class ConsoleTransport implements Transport {
 
     const output = formatter.format(data);
 
-    // Restore original settings
     Object.assign(formatter, {
       json: originalJsonSetting,
       colorize: originalColorizeSetting,
@@ -41,5 +40,12 @@ export class ConsoleTransport implements Transport {
         console.log(output);
         break;
     }
+  }
+
+  async writeAsync(data: LogData, formatter: Formatter): Promise<void> {
+    setImmediate(() => {
+      this.write(data, formatter);
+    });
+    return Promise.resolve();
   }
 }

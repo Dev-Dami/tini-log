@@ -18,6 +18,7 @@ export interface LoggerOptions {
   timestamp?: boolean;
   context?: Record<string, any>;
   parent?: Logger;
+  async?: boolean;
 }
 
 export class Logger {
@@ -26,6 +27,7 @@ export class Logger {
   private formatter: Formatter;
   private context: Record<string, any>;
   private parent: Logger | undefined;
+  private asyncMode: boolean;
   private static _global: Logger;
 
   prefix: string;
@@ -42,8 +44,10 @@ export class Logger {
       timestamp,
       context = {},
       parent,
+      async = false,
     } = options;
 
+    this.asyncMode = async;
     this.parent = parent; // Set parent
     this.context = { ...context }; // Init context
 
@@ -51,6 +55,7 @@ export class Logger {
       this.level = level ?? this.parent.level;
       this.prefix = prefix ?? this.parent.prefix;
       this.timestamp = timestamp ?? this.parent.timestamp;
+      this.asyncMode = async ?? this.parent.asyncMode;
       this.transports =
         transports.length > 0
           ? this.initTransports(transports, colorize)
@@ -141,7 +146,6 @@ export class Logger {
     if (!this.shouldLog(level)) {
       return;
     }
-
     // Donot log 'silent' level logs at all
     if (level === "silent") {
       return;
@@ -158,8 +162,27 @@ export class Logger {
       prefix: this.prefix,
     };
 
+    if (this.asyncMode) {
+      this.logAsync(logData);
+    } else {
+      for (const transport of this.transports) {
+        transport.write(logData, this.formatter);
+      }
+    }
+  }
+
+  // process asyncronously
+  private logAsync(logData: LogData): void {
     for (const transport of this.transports) {
-      transport.write(logData, this.formatter);
+      if (transport.writeAsync) {
+        transport.writeAsync(logData, this.formatter).catch((error) => {
+          console.error("Error during async logging:", error);
+        });
+      } else {
+        setImmediate(() => {
+          transport.write(logData, this.formatter);
+        });
+      }
     }
   }
 
@@ -193,6 +216,10 @@ export class Logger {
 
   setFormat(format: "text" | "json"): void {
     this.formatter.setJson(format === "json");
+  }
+
+  setAsync(async: boolean): void {
+    this.asyncMode = async;
   }
 
   addTransport(transport: Transport): void {

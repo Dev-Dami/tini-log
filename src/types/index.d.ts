@@ -28,4 +28,5 @@ export interface LoggerConfig {
   timestampFormat?: string;
   prefix?: string;
   timestamp?: boolean;
+  async?: boolean;
 }

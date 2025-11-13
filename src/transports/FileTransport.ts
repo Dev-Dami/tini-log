@@ -38,6 +38,26 @@ export class FileTransport implements Transport {
     this.rotateIfNeeded();
   }
 
+  async writeAsync(data: LogData, formatter: Formatter): Promise<void> {
+    const output = formatter.format(data);
+    const formattedOutput = output + "\n";
+
+    return new Promise((resolve, reject) => {
+      fs.appendFile(this.filePath, formattedOutput, (err) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        setImmediate(() => {
+          // perform rotation checks async i.e no blocking may need debugging
+          this.rotateIfNeededAsync()
+            .then(() => resolve())
+            .catch(reject);
+        });
+      });
+    });
+  }
+
   private rotateIfNeeded(): void {
     if (!fs.existsSync(this.filePath)) {
       return;
@@ -49,10 +69,38 @@ export class FileTransport implements Transport {
     }
   }
 
+  private async rotateIfNeededAsync(): Promise<void> {
+    if (!fs.existsSync(this.filePath)) {
+      return;
+    }
+
+    try {
+      const stats = fs.statSync(this.filePath);
+      if (stats.size > this.maxSize) {
+        await this.rotateFilesAsync();
+      }
+    } catch (error) {
+      console.error("Error during rotation check:", error);
+    }
+  }
+
   private rotateFiles(): void {
     const rotatedFilePath = `${this.filePath}.${Date.now()}`;
     fs.renameSync(this.filePath, rotatedFilePath);
     this.cleanupOldFiles();
+  }
+
+  private async rotateFilesAsync(): Promise<void> {
+    const rotatedFilePath = `${this.filePath}.${Date.now()}`;
+    return new Promise((resolve, reject) => {
+      fs.rename(this.filePath, rotatedFilePath, (err) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        this.cleanupOldFilesAsync().then(resolve).catch(reject);
+      });
+    });
   }
 
   private cleanupOldFiles(): void {
@@ -72,5 +120,52 @@ export class FileTransport implements Transport {
         fs.unlinkSync(fileToDelete);
       }
     }
+  }
+
+  private async cleanupOldFilesAsync(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const dir = path.dirname(this.filePath);
+      const basename = path.basename(this.filePath);
+
+      fs.readdir(dir, (err, allFiles) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+
+        const files = allFiles
+          .filter(
+            (file) => file && file.startsWith(basename) && file !== basename,
+          )
+          .sort()
+          .reverse();
+
+        let completed = 0;
+        const toDelete = files.slice(this.maxFiles - 1);
+
+        if (toDelete.length === 0) {
+          resolve();
+          return;
+        }
+
+        for (const file of toDelete) {
+          const fileToDelete = path.join(dir, file);
+          fs.unlink(fileToDelete, (unlinkErr) => {
+            completed++;
+            if (unlinkErr && completed === toDelete.length) {
+              reject(unlinkErr);
+              return;
+            }
+            if (completed === toDelete.length) {
+              resolve();
+            }
+          });
+        }
+
+        if (toDelete.length === 0) {
+          resolve();
+        }
+      });
+    });
   }
 }
