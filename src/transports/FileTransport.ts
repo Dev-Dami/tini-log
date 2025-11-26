@@ -117,10 +117,23 @@ export class FileTransport implements Transport {
       const file = files[i];
       if (file) {
         // Validate filename
-        if (file.includes('../') || file.includes('..\\') || file.startsWith('..')) {
+        if (
+          file.includes("../") ||
+          file.includes("..\\") ||
+          file.startsWith("..")
+        ) {
           continue;
         }
         const fileToDelete = path.join(dir, file);
+        const resolvedPath = path.resolve(fileToDelete);
+        const resolvedDir = path.resolve(dir);
+        if (
+          !resolvedPath.startsWith(resolvedDir + path.sep) &&
+          resolvedPath !== resolvedDir
+        ) {
+          continue;
+        }
+
         fs.unlinkSync(fileToDelete);
       }
     }
@@ -154,7 +167,11 @@ export class FileTransport implements Transport {
 
         for (const file of toDelete) {
           // Validate Filename
-          if (file.includes('../') || file.includes('..\\') || file.startsWith('..')) {
+          if (
+            file.includes("../") ||
+            file.includes("..\\") ||
+            file.startsWith("..")
+          ) {
             completed++;
             if (completed === toDelete.length) {
               resolve();
@@ -162,6 +179,19 @@ export class FileTransport implements Transport {
             continue;
           }
           const fileToDelete = path.join(dir, file);
+          const resolvedPath = path.resolve(fileToDelete);
+          const resolvedDir = path.resolve(dir);
+          if (
+            !resolvedPath.startsWith(resolvedDir + path.sep) &&
+            resolvedPath !== resolvedDir
+          ) {
+            completed++;
+            if (completed === toDelete.length) {
+              resolve();
+            }
+            continue;
+          }
+
           fs.unlink(fileToDelete, (unlinkErr) => {
             completed++;
             if (unlinkErr && completed === toDelete.length) {
