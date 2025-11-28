@@ -166,7 +166,7 @@ export class FileTransport implements Transport {
       }
 
       for (const file of toDelete) {
-        // 1. Validación básica del nombre
+        // Basic name validation
         if (
           file.includes("../") ||
           file.includes("..\\") ||
@@ -177,17 +177,17 @@ export class FileTransport implements Transport {
           continue;
         }
 
-        // 2. Crear y resolver la ruta segura
+        // Create and resolve the secure route
         const safePath = path.resolve(dir, file);
 
-        // 3. Verificar que no escape del dir
+        // Verify that there are no leaks from the directory.
         if (!safePath.startsWith(path.resolve(dir) + path.sep)) {
           completed++;
           if (completed === toDelete.length) resolve();
           continue;
         }
 
-        // 4. Confirmar que es un archivo real
+        // Confirm that it is a real file
         fs.stat(safePath, (statErr, stats) => {
           if (statErr || !stats.isFile()) {
             completed++;
@@ -195,7 +195,7 @@ export class FileTransport implements Transport {
             return;
           }
 
-          // 5. Borrar archivo de forma segura
+          // Securely delete file
           fs.unlink(safePath, (unlinkErr) => {
             completed++;
             if (unlinkErr && completed === toDelete.length) {
