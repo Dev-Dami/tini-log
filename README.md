@@ -1,48 +1,701 @@
-# dd-tinylog
+<div align="center">
 
-[![npm version](https://badge.fury.io/js/dd-tinylog.svg)](https://badge.fury.io/js/dd-tinylog)  
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+# 📝 dd-tinylog
 
-A minimal, fast, and low-overhead logging library for Node.js. It is designed for various applications, including web servers, CLIs, and microservices.
+### ⚡ The Ultimate Minimal Logging Solution for Node.js
 
-## Features
+[![npm version](https://img.shields.io/npm/v/dd-tinylog?style=for-the-badge&logo=npm&color=CB3837)](https://www.npmjs.com/package/dd-tinylog)
+[![license](https://img.shields.io/npm/l/dd-tinylog?style=for-the-badge&color=green)](./LICENSE)
+[![downloads](https://img.shields.io/npm/dt/dd-tinylog?style=for-the-badge&logo=npm&color=orange)](https://www.npmjs.com/package/dd-tinylog)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/dd-tinylog?style=for-the-badge&logo=webpack&color=purple)](https://bundlephobia.com/package/dd-tinylog)
 
-`dd-tinylog` offers a solid set of features for efficient and flexible logging. Learn more about what it can do in the [Features Documentation](./docs/features.md).
+<br/>
 
-## Installation
+**Fast** • **Lightweight** • **Zero Dependencies** • **TypeScript Native**
+
+<br/>
+
+[📖 Documentation](#-documentation) · [⚡ Quick Start](#-quick-start) · [✨ Features](#-features) · [💬 Community](#-community)
+
+<br/>
+
+![separator](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+</div>
+
+<br/>
+
+## 🎯 Why dd-tinylog?
+
+<table>
+<tr>
+<td align="center" width="25%">
+<img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/nodejs/nodejs.png" width="60" height="60">
+<br/><br/>
+<strong>Node.js Native</strong>
+<br/>
+<sub>Built specifically for Node.js performance</sub>
+</td>
+<td align="center" width="25%">
+<img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/typescript/typescript.png" width="60" height="60">
+<br/><br/>
+<strong>TypeScript First</strong>
+<br/>
+<sub>Full type safety out of the box</sub>
+</td>
+<td align="center" width="25%">
+<img src="https://cdn-icons-png.flaticon.com/512/7991/7991055.png" width="60" height="60">
+<br/><br/>
+<strong>Zero Dependencies</strong>
+<br/>
+<sub>No bloat, pure performance</sub>
+</td>
+<td align="center" width="25%">
+<img src="https://cdn-icons-png.flaticon.com/512/2088/2088617.png" width="60" height="60">
+<br/><br/>
+<strong>Blazingly Fast</strong>
+<br/>
+<sub>Optimized for high throughput</sub>
+</td>
+</tr>
+</table>
+
+<br/>
+
+## 📦 Installation
 
 ```bash
 npm install dd-tinylog
 ```
 
-## Usage
+<details>
+<summary>📋 Other Package Managers</summary>
 
-```typescript
+```bash
+# Using Yarn
+yarn add dd-tinylog
+
+# Using pnpm
+pnpm add dd-tinylog
+
+# Using bun
+bun add dd-tinylog
+```
+
+</details>
+
+<br/>
+
+## ⚡ Quick Start
+
+### 🚀 Basic Usage
+
+```javascript
 import { Logger } from 'dd-tinylog';
 
-// Create a logger instance
+// Initialize logger
 const logger = new Logger({
   level: 'info',
   colorize: true,
   transports: [{ type: 'console' }],
-  prefix: '[My-App]',
+  prefix: '[MyApp]',
 });
 
-// Log messages
-logger.info('Server started on port 3000');
-logger.error('Failed to connect to database', { code: 500 });
+// Start logging
+logger.info('🚀 Server started on port 3000');
+logger.warn('⚠️ High memory usage detected');
+logger.error('❌ Database connection failed', { code: 500 });
 ```
 
-For more details on usage, configurations, and examples including child loggers, check the [Usage Guide](./docs/usage.md).
+**Output:**
+```
+[MyApp] INFO  🚀 Server started on port 3000
+[MyApp] WARN  ⚠️ High memory usage detected
+[MyApp] ERROR ❌ Database connection failed { code: 500 }
+```
 
-## License
+<br/>
 
-This project is licensed under the MIT License. See the [LICENSE](/LICENSE) file for details.
+### 🎨 Log Levels
 
-## Uses for this Library
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Method</th>
+<th>Use Case</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🔍 <strong>DEBUG</strong></td>
+<td><code>logger.debug()</code></td>
+<td>Detailed debugging info</td>
+<td>Variable values, function calls</td>
+</tr>
+<tr>
+<td>ℹ️ <strong>INFO</strong></td>
+<td><code>logger.info()</code></td>
+<td>General information</td>
+<td>Server started, user logged in</td>
+</tr>
+<tr>
+<td>⚠️ <strong>WARN</strong></td>
+<td><code>logger.warn()</code></td>
+<td>Warning messages</td>
+<td>Deprecated API usage, high load</td>
+</tr>
+<tr>
+<td>❌ <strong>ERROR</strong></td>
+<td><code>logger.error()</code></td>
+<td>Error conditions</td>
+<td>Failed requests, exceptions</td>
+</tr>
+<tr>
+<td>💀 <strong>FATAL</strong></td>
+<td><code>logger.fatal()</code></td>
+<td>Critical failures</td>
+<td>System crash, data corruption</td>
+</tr>
+</tbody>
+</table>
 
-`dd-tinylog` is a versatile logging tool for various Node.js applications. Explore common use cases and how this library can help your projects in the [Library Uses Documentation](./docs/library-uses.md).
+```javascript
+logger.debug('Debugging user authentication flow');
+logger.info('User successfully authenticated');
+logger.warn('Session about to expire');
+logger.error('Failed to save user data');
+logger.fatal('Database connection lost');
+```
 
-## Planned Improvements
+<br/>
 
-We are always working on improving `dd-tinylog`. See what’s coming next in the [Planned Improvements Documentation](./docs/planned-improvements.md).
+### 👶 Child Loggers
+
+Create contextual loggers for different modules:
+
+```javascript
+const mainLogger = new Logger({ prefix: '[App]' });
+
+// Create child loggers with context
+const apiLogger = mainLogger.child({ module: 'API' });
+const dbLogger = mainLogger.child({ module: 'Database' });
+const authLogger = mainLogger.child({ module: 'Auth' });
+
+apiLogger.info('Request received');     // [App] [API] Request received
+dbLogger.info('Query executed');        // [App] [Database] Query executed
+authLogger.info('User authenticated');  // [App] [Auth] User authenticated
+```
+
+<br/>
+
+![separator](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+<br/>
+
+## ✨ Features
+
+### 🎯 Core Features
+
+<table>
+<tr>
+<td width="33%">
+
+#### 🚀 High Performance
+- **Async logging** for non-blocking I/O
+- **Optimized** for high-throughput apps
+- **Minimal overhead** in production
+- **Fast JSON serialization**
+
+</td>
+<td width="33%">
+
+#### 🎨 Developer Experience
+- **Beautiful colorized output**
+- **TypeScript definitions**
+- **Intuitive API**
+- **Easy configuration**
+
+</td>
+<td width="33%">
+
+#### 🔧 Flexible Configuration
+- **Multiple transports**
+- **Custom formatters**
+- **Log level filtering**
+- **Metadata support**
+
+</td>
+</tr>
+</table>
+
+<br/>
+
+### 📊 Transport Options
+
+<details>
+<summary><strong>📺 Console Transport</strong></summary>
+
+```javascript
+const logger = new Logger({
+  transports: [{ 
+    type: 'console',
+    colorize: true 
+  }]
+});
+```
+
+Perfect for development and debugging.
+
+</details>
+
+<details>
+<summary><strong>📁 File Transport</strong></summary>
+
+```javascript
+const logger = new Logger({
+  transports: [{ 
+    type: 'file',
+    filename: 'app.log',
+    maxSize: '10m',
+    maxFiles: 5
+  }]
+});
+```
+
+Ideal for production logging and auditing.
+
+</details>
+
+<details>
+<summary><strong>🔌 Custom Transport</strong></summary>
+
+```javascript
+const logger = new Logger({
+  transports: [{
+    type: 'custom',
+    write: (log) => {
+      // Send to external service
+      sendToDatadog(log);
+    }
+  }]
+});
+```
+
+Integrate with any logging service.
+
+</details>
+
+<br/>
+
+### 🎭 Advanced Features
+
+<table>
+<tr>
+<td>
+
+**🏷️ Metadata Support**
+```javascript
+logger.info('User login', {
+  userId: 12345,
+  ip: '192.168.1.1',
+  timestamp: new Date()
+});
+```
+
+</td>
+<td>
+
+**🔍 Error Tracking**
+```javascript
+try {
+  riskyOperation();
+} catch (error) {
+  logger.error('Operation failed', error);
+}
+```
+
+</td>
+</tr>
+<tr>
+<td>
+
+**🎯 Prefix/Namespace**
+```javascript
+const logger = new Logger({
+  prefix: '[MyService]'
+});
+```
+
+</td>
+<td>
+
+**⚙️ Environment Aware**
+```javascript
+const logger = new Logger({
+  level: process.env.LOG_LEVEL || 'info'
+});
+```
+
+</td>
+</tr>
+</table>
+
+<br/>
+
+![separator](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+<br/>
+
+## 💡 Use Cases
+
+<table>
+<tr>
+<td width="50%">
+
+### 🌐 Web Applications
+
+```javascript
+import express from 'express';
+import { Logger } from 'dd-tinylog';
+
+const app = express();
+const logger = new Logger({ prefix: '[API]' });
+
+app.use((req, res, next) => {
+  logger.info(`${req.method} ${req.path}`);
+  next();
+});
+
+app.listen(3000, () => {
+  logger.info('Server started on port 3000');
+});
+```
+
+**Perfect for:**
+- Express.js applications
+- Fastify servers
+- Koa.js projects
+- REST APIs
+
+</td>
+<td width="50%">
+
+### ⚡ Serverless Functions
+
+```javascript
+import { Logger } from 'dd-tinylog';
+
+const logger = new Logger({
+  level: 'info',
+  transports: [{ type: 'console' }]
+});
+
+export async function handler(event) {
+  logger.info('Lambda invoked', { 
+    requestId: event.requestId 
+  });
+  
+  try {
+    const result = await processEvent(event);
+    logger.info('Processing complete');
+    return result;
+  } catch (error) {
+    logger.error('Processing failed', error);
+    throw error;
+  }
+}
+```
+
+**Perfect for:**
+- AWS Lambda
+- Vercel Functions
+- Netlify Functions
+- Cloudflare Workers
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### 🔧 CLI Applications
+
+```javascript
+import { Logger } from 'dd-tinylog';
+
+const logger = new Logger({
+  colorize: true,
+  prefix: '[CLI]'
+});
+
+async function buildProject() {
+  logger.info('Starting build process...');
+  
+  logger.debug('Reading config file');
+  logger.info('Compiling TypeScript...');
+  logger.info('Bundling assets...');
+  
+  logger.info('✅ Build completed successfully!');
+}
+```
+
+**Perfect for:**
+- Command-line tools
+- Build scripts
+- DevOps automation
+- System utilities
+
+</td>
+<td width="50%">
+
+### 🏗️ Microservices
+
+```javascript
+import { Logger } from 'dd-tinylog';
+
+// Create service-specific loggers
+const userService = new Logger({
+  prefix: '[UserService]'
+});
+
+const paymentService = new Logger({
+  prefix: '[PaymentService]'
+});
+
+const orderService = new Logger({
+  prefix: '[OrderService]'
+});
+
+// Use in distributed system
+userService.info('User created', { id: 123 });
+paymentService.info('Payment processed');
+orderService.info('Order placed');
+```
+
+**Perfect for:**
+- Distributed systems
+- Message queues
+- Event-driven architecture
+- Container deployments
+
+</td>
+</tr>
+</table>
+
+<br/>
+
+![separator](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+<br/>
+
+## 📖 Documentation
+
+<div align="center">
+
+<table>
+<thead>
+<tr>
+<th width="30%">📚 Resource</th>
+<th width="50%">📝 Description</th>
+<th width="20%">🔗 Link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>📘 Usage Guide</strong></td>
+<td>Complete guide with examples and best practices</td>
+<td><a href="./docs/usage.md">Read →</a></td>
+</tr>
+<tr>
+<td><strong>⚙️ Configuration</strong></td>
+<td>All configuration options explained in detail</td>
+<td><a href="./docs/configuration.md">Read →</a></td>
+</tr>
+<tr>
+<td><strong>🎯 API Reference</strong></td>
+<td>Full API documentation with type definitions</td>
+<td><a href="./docs/api.md">Read →</a></td>
+</tr>
+<tr>
+<td><strong>💼 Use Cases</strong></td>
+<td>Real-world examples and implementation patterns</td>
+<td><a href="./docs/use-cases.md">Read →</a></td>
+</tr>
+<tr>
+<td><strong>🚀 Migration Guide</strong></td>
+<td>Migrate from other logging libraries</td>
+<td><a href="./docs/migration.md">Read →</a></td>
+</tr>
+<tr>
+<td><strong>🔌 Custom Transports</strong></td>
+<td>Build your own transport implementations</td>
+<td><a href="./docs/transports.md">Read →</a></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+<br/>
+
+![separator](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+<br/>
+
+## 🗺️ Roadmap
+
+<table>
+<tr>
+<td width="33%">
+
+### 🎯 Coming Soon
+
+- [x] ✅ Console & File transports
+- [x] ✅ Child loggers
+- [x] ✅ TypeScript support
+- [ ] 🔄 Log rotation
+- [ ] 🔄 HTTP transport
+- [ ] 🔄 Syslog support
+
+</td>
+<td width="33%">
+
+### 🚀 Future Plans
+
+- [ ] 📊 Performance metrics
+- [ ] 🔍 Advanced filtering
+- [ ] 📱 React Native support
+- [ ] 🌈 Custom themes
+- [ ] 🔐 Log encryption
+- [ ] 📈 Analytics dashboard
+
+</td>
+<td width="33%">
+
+### 💡 Under Consideration
+
+- [ ] WebSocket transport
+- [ ] MongoDB transport
+- [ ] Redis transport
+- [ ] Elasticsearch integration
+- [ ] Structured logging
+- [ ] Log aggregation
+
+</td>
+</tr>
+</table>
+
+> 🗳️ **Vote for features:** Have a feature request? [Open an issue](../../issues/new) and let us know!
+
+<br/>
+
+![separator](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+<br/>
+
+## 🤝 Contributing
+
+We ❤️ contributions! Whether it's bug reports, feature requests, or code contributions.
+
+<table>
+<tr>
+<td width="25%" align="center">
+<strong>🐛 Report Bugs</strong><br/>
+<sub>Found a bug?</sub><br/>
+<a href="../../issues/new">Report it →</a>
+</td>
+<td width="25%" align="center">
+<strong>💡 Request Features</strong><br/>
+<sub>Have an idea?</sub><br/>
+<a href="../../issues/new">Suggest it →</a>
+</td>
+<td width="25%" align="center">
+<strong>📖 Improve Docs</strong><br/>
+<sub>Fix a typo?</sub><br/>
+<a href="../../pulls">Submit PR →</a>
+</td>
+<td width="25%" align="center">
+<strong>💬 Join Discussion</strong><br/>
+<sub>Questions?</sub><br/>
+<a href="../../discussions">Discuss →</a>
+</td>
+</tr>
+</table>
+
+### 📝 Development Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/dd-tinylog.git
+
+# Install dependencies
+cd dd-tinylog
+npm install
+
+# Run tests
+npm test
+
+# Build the project
+npm run build
+```
+
+<br/>
+
+## 💬 Community
+
+<div align="center">
+
+[![GitHub Stars](https://img.shields.io/github/stars/yourusername/dd-tinylog?style=social)](../../stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/yourusername/dd-tinylog?style=social)](../../network/members)
+[![GitHub Issues](https://img.shields.io/github/issues/yourusername/dd-tinylog?style=social)](../../issues)
+
+**Join our growing community!**
+
+[💬 Discussions](../../discussions) • [🐛 Issues](../../issues) • [📢 Changelog](./CHANGELOG.md)
+
+</div>
+
+<br/>
+
+![separator](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+<br/>
+
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](./LICENSE) file for full details.
+
+```
+MIT License - feel free to use this in your projects!
+```
+
+<br/>
+
+## 🌟 Show Your Support
+
+If **dd-tinylog** made your logging easier, consider:
+
+<div align="center">
+
+⭐ **Star this repository** to show your support
+
+🐦 **Share on Twitter** to spread the word
+
+☕ **Buy us a coffee** to fuel development
+
+[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/dd-tinylog&type=Date)](https://star-history.com/#yourusername/dd-tinylog&Date)
+
+</div>
+
+<br/>
+
+---
+
+<div align="center">
+
+**Made with ❤️ by developers, for developers**
+
+[⬆ Back to Top](#-dd-tinylog)
+
+</div>
