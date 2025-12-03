@@ -1,12 +1,14 @@
-import { LogData } from '../types';
-import { TimeUtil } from '../utils/TimeUtil';
-import { ColorUtil } from '../utils/ColorUtil';
+import { LogData } from "../types";
+import { TimeUtil } from "../utils/TimeUtil";
+import { ColorUtil } from "../utils/ColorUtil";
+import { LogLevel as DefaultLogLevel } from "./LogLevel";
 
 export interface FormatterOptions {
   colorize?: boolean;
   json?: boolean;
   timestampFormat?: string;
   timestamp?: boolean;
+  customColors?: { [level: string]: string };
 }
 
 export class Formatter {
@@ -14,6 +16,7 @@ export class Formatter {
   private json: boolean;
   private timestampFormat: string;
   private timestamp: boolean;
+  private customColors: { [level: string]: string };
 
   constructor(options: FormatterOptions = {}) {
     const {
@@ -21,11 +24,13 @@ export class Formatter {
       json = false,
       timestampFormat = "YYYY-MM-DD HH:mm:ss",
       timestamp = false,
+      customColors = {},
     } = options;
     this.colorize = colorize;
     this.json = json;
     this.timestampFormat = timestampFormat;
     this.timestamp = timestamp;
+    this.customColors = customColors;
   }
 
   format(data: LogData): string {
@@ -64,7 +69,9 @@ export class Formatter {
     let level = data.level.toUpperCase();
 
     if (this.colorize) {
-      level = ColorUtil.colorize(level, data.level);
+      // Use custom color if available, otherwise use the level name as color
+      const color = this.customColors[data.level] || data.level;
+      level = ColorUtil.colorize(level, color);
     }
 
     output += `${level} - `;
@@ -100,5 +107,9 @@ export class Formatter {
 
   hasTimestamp(): boolean {
     return this.timestamp;
+  }
+
+  getCustomColors(): { [level: string]: string } {
+    return { ...this.customColors };
   }
 }

@@ -1,4 +1,5 @@
 import { LogLevel } from "../core/LogLevel";
+import { CustomLogLevelConfig } from "../core/CustomLogLevel";
 import { Transport } from "../transports/Transport";
 
 export interface LogData {

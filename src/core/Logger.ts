@@ -19,6 +19,8 @@ export interface LoggerOptions {
   context?: Record<string, any>;
   parent?: Logger;
   async?: boolean;
+  customLevels?: { [level: string]: number }; // level name and priority
+  customColors?: { [level: string]: string }; // level name and color
 }
 
 export class Logger {
@@ -28,6 +30,7 @@ export class Logger {
   private context: Record<string, any>;
   private parent: Logger | undefined;
   private asyncMode: boolean;
+  private customLevels: { [level: string]: number };
   private static _global: Logger;
 
   prefix: string;
@@ -45,11 +48,14 @@ export class Logger {
       context = {},
       parent,
       async = false,
+      customLevels = {},
+      customColors = {},
     } = options;
 
     this.asyncMode = async;
     this.parent = parent; // Set parent
     this.context = { ...context }; // Init context
+    this.customLevels = customLevels; // Store custom log levels
 
     if (this.parent) {
       this.level = level ?? this.parent.level;
@@ -60,14 +66,22 @@ export class Logger {
         transports.length > 0
           ? this.initTransports(transports, colorize)
           : this.parent.transports;
+      // Merge colors; child overrides parent
+      const mergedCustomColors = {
+        ...this.parent.formatter.getCustomColors(),
+        ...customColors,
+      };
       this.formatter = new Formatter({
         colorize: colorize ?? this.parent.formatter.isColorized(),
         json: json ?? this.parent.formatter.isJson(),
         timestampFormat:
           timestampFormat ?? this.parent.formatter.getTimestampFormat(),
         timestamp: timestamp ?? this.parent.formatter.hasTimestamp(),
+        customColors: mergedCustomColors,
       });
       this.context = { ...this.parent.context, ...this.context };
+      // Merge custom levels with parent's custom levels
+      this.customLevels = { ...this.parent.customLevels, ...customLevels };
     } else {
       this.level = level ?? "info";
       this.prefix = prefix ?? "";
@@ -81,6 +95,7 @@ export class Logger {
         json,
         timestampFormat,
         timestamp: this.timestamp,
+        customColors,
       });
     }
 
@@ -124,18 +139,33 @@ export class Logger {
   }
 
   private shouldLog(level: LogLevel): boolean {
-    const levels: LogLevel[] = [
-      "silent",
-      "boring",
-      "debug",
-      "info",
-      "warn",
-      "error",
-    ];
-    const currentLevelIndex = levels.indexOf(this.level);
-    const messageLevelIndex = levels.indexOf(level);
+    // Get the priority of the current logger level
+    const currentLevelPriority = this.getLevelPriority(this.level);
+    // Get the priority of the message level
+    const messageLevelPriority = this.getLevelPriority(level);
 
-    return messageLevelIndex >= currentLevelIndex;
+    return messageLevelPriority >= currentLevelPriority;
+  }
+
+  private getLevelPriority(level: LogLevel): number {
+    // Default log level priorities
+    const defaultPriorities: { [key: string]: number } = {
+      silent: 0,
+      boring: 1,
+      debug: 2,
+      info: 3,
+      warn: 4,
+      error: 5,
+    };
+
+    // Check if it's a custom level
+    if (this.customLevels && this.customLevels.hasOwnProperty(level)) {
+      const customPriority = this.customLevels[level];
+      return customPriority !== undefined ? customPriority : 999;
+    }
+
+    // Use default priority if available
+    return defaultPriorities[level] ?? 999; // Default to high priority for unknown levels
   }
 
   private log(
@@ -146,7 +176,7 @@ export class Logger {
     if (!this.shouldLog(level)) {
       return;
     }
-    // Donot log 'silent' level logs at all
+    // Donot log silent level logs at all
     if (level === "silent") {
       return;
     }
@@ -208,6 +238,17 @@ export class Logger {
 
   boring(message: string, metadata?: Record<string, any>): void {
     this.log("boring", message, metadata);
+  }
+
+  /**
+   * Generic log method that allows logging with custom levels
+   */
+  logWithLevel(
+    level: LogLevel,
+    message: string,
+    metadata?: Record<string, any>,
+  ): void {
+    this.log(level, message, metadata);
   }
 
   setLevel(level: LogLevel): void {
