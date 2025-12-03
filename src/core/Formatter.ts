@@ -1,7 +1,7 @@
-import { LogData } from '../types';
-import { TimeUtil } from '../utils/TimeUtil';
-import { ColorUtil } from '../utils/ColorUtil';
-import { LogLevel as DefaultLogLevel } from './LogLevel';
+import { LogData } from "../types";
+import { TimeUtil } from "../utils/TimeUtil";
+import { ColorUtil } from "../utils/ColorUtil";
+import { LogLevel as DefaultLogLevel } from "./LogLevel";
 
 export interface FormatterOptions {
   colorize?: boolean;
@@ -107,5 +107,9 @@ export class Formatter {
 
   hasTimestamp(): boolean {
     return this.timestamp;
+  }
+
+  getCustomColors(): { [level: string]: string } {
+    return { ...this.customColors };
   }
 }

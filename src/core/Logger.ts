@@ -66,13 +66,18 @@ export class Logger {
         transports.length > 0
           ? this.initTransports(transports, colorize)
           : this.parent.transports;
+      // Merge colors; child overrides parent
+      const mergedCustomColors = {
+        ...this.parent.formatter.getCustomColors(),
+        ...customColors,
+      };
       this.formatter = new Formatter({
         colorize: colorize ?? this.parent.formatter.isColorized(),
         json: json ?? this.parent.formatter.isJson(),
         timestampFormat:
           timestampFormat ?? this.parent.formatter.getTimestampFormat(),
         timestamp: timestamp ?? this.parent.formatter.hasTimestamp(),
-        customColors: customColors,
+        customColors: mergedCustomColors,
       });
       this.context = { ...this.parent.context, ...this.context };
       // Merge custom levels with parent's custom levels
