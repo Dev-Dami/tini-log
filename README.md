@@ -142,7 +142,9 @@ const logger = new Logger({
   transports: [{ type: 'console' }],
   prefix: '[MyApp]',
 });
+```
 
+```
 // Start logging
 logger.info('🚀 Server started on port 3000');
 logger.warn('⚠️ High memory usage detected');
@@ -489,7 +491,7 @@ Output:
   "message": "User logged in"
 }
 ```
-
+```typescript
 async function buildProject() {
   logger.info('Starting build process...');
   
@@ -519,7 +521,6 @@ import { Logger } from 'dd-tinylog';
 const userService = new Logger({
   prefix: '[UserService]'
 });
-```
 
 const paymentService = new Logger({
   prefix: '[PaymentService]'
