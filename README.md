@@ -100,18 +100,6 @@ npm install tini-log
 
 <details>
 <summary>📋 Other Package Managers</summary>
-```bash
-# Using Yarn
-yarn add dd-tinylog
-# Using pnpm
-pnpm add dd-tinylog
-# Using bun
-bun add dd-tinylog
-```
-</details>
-
-<details>
-<summary>📋 Other Package Managers</summary>
 
 ```bash
 # Using Yarn
