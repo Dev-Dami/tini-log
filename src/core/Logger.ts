@@ -32,6 +32,14 @@ export class Logger {
   private asyncMode: boolean;
   private customLevels: { [level: string]: number };
   private static _global: Logger;
+  private static readonly LEVEL_PRIORITIES: { [level: string]: number } = {
+    "silent": 0,
+    "boring": 1,
+    "debug": 2,
+    "info": 3,
+    "warn": 4,
+    "error": 5,
+  };
 
   prefix: string;
   timestamp: boolean;
@@ -205,28 +213,16 @@ export class Logger {
   }
 
   private getLevelPriority(level: LogLevel): number {
-    // sse a static map to avoid repeated allocations
-    switch (level) {
-      case "silent":
-        return 0;
-      case "boring":
-        return 1;
-      case "debug":
-        return 2;
-      case "info":
-        return 3;
-      case "warn":
-        return 4;
-      case "error":
-        return 5;
-      default:
-        // Check if it's a custom level
-        if (this.customLevels && level in this.customLevels) {
-          const customPriority = this.customLevels[level];
-          return customPriority !== undefined ? customPriority : 999;
-        }
-        return 999;
+    // use a static map to avoid repeated allocations
+    if (Logger.LEVEL_PRIORITIES.hasOwnProperty(level)) {
+      return Logger.LEVEL_PRIORITIES[level]!;
     }
+    // Check if it's a custom level
+    if (this.customLevels && level in this.customLevels) {
+      const customPriority = this.customLevels[level];
+      return customPriority !== undefined ? customPriority : 999;
+    }
+    return 999;
   }
 
   private log(

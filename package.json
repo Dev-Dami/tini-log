@@ -1,6 +1,6 @@
 {
   "name": "zario",
-  "version": "0.2.1",
+  "version": "0.2.6",
   "description": "A minimal, fast logging library for Node.js.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -51,6 +51,7 @@
   },
   "files": [
     "dist/**/*",
-    "README.md"
+    "README.md",
+    "README.npm.md"
   ]
 }
