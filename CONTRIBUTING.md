@@ -27,17 +27,17 @@ There are many ways to contribute to the project, and we welcome all of them!
 <td width="25%" align="center">
 <strong>🐛 Report Bugs</strong><br/>
 <sub>Found something broken?</sub><br/>
-<a href="https://github.com/Dev-Dami/tini-log/issues/new?template=bug_report.md">Report it →</a>
+<a href="https://github.com/Dev-Dami/zario/issues/new?template=bug_report.md">Report it →</a>
 </td>
 <td width="25%" align="center">
 <strong>💡 Request Features</strong><br/>
 <sub>Have a great idea?</sub><br/>
-<a href="https://github.com/Dev-Dami/tini-log/issues/new?template=feature_request.md">Suggest it →</a>
+<a href="https://github.com/Dev-Dami/zario/issues/new?template=feature_request.md">Suggest it →</a>
 </td>
 <td width="25%" align="center">
 <strong>📖 Improve Docs</strong><br/>
 <sub>Found a typo?</sub><br/>
-<a href="https://github.com/Dev-Dami/tini-log/pulls">Submit PR →</a>
+<a href="https://github.com/Dev-Dami/zario/pulls">Submit PR →</a>
 </td>
 <td width="25%" align="center">
 <strong>💻 Write Code</strong><br/>
@@ -58,7 +58,7 @@ There are many ways to contribute to the project, and we welcome all of them!
 Ready to start coding? Here’s how to set up `Zario` for local development.
 
 1.  **Fork the Repository**
-    Click the "Fork" button at the top right of the [main repository page](https://github.com/Dev-Dami/tini-log). This creates your own copy of the project.
+    Click the "Fork" button at the top right of the [main repository page](https://github.com/Dev-Dami/zario). This creates your own copy of the project.
 
 2.  **Clone Your Fork**
     Clone your forked repository to your local machine.

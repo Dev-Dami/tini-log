@@ -47,14 +47,12 @@ describe("README.md - Custom Levels & Colors Examples", () => {
         "This is a critical message in bright red",
       );
 
-      // Verify all logs were created
-      expect(logs.length).toBe(3);
+      // Verify 2 logs were created (verbose won't appear because its priority 1 is < info's priority 3)
+      expect(logs.length).toBe(2);
       expect(logs[0].level).toBe("success");
       expect(logs[0].message).toBe("This is a success message in green!");
-      expect(logs[1].level).toBe("verbose");
-      expect(logs[1].message).toBe("This is a verbose message in cyan");
-      expect(logs[2].level).toBe("critical");
-      expect(logs[2].message).toBe("This is a critical message in bright red");
+      expect(logs[1].level).toBe("critical");
+      expect(logs[1].message).toBe("This is a critical message in bright red");
     });
 
     test("should properly filter based on custom level priorities", () => {

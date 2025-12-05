@@ -74,12 +74,12 @@ export class Formatter {
       level = ColorUtil.colorize(level, color);
     }
 
-    const levelStr = `${level} - `;
+    const levelStr = `[${level}] `;
     const prefixStr = data.prefix ? `${data.prefix} ` : '';
     const metadataStr = data.metadata ? ` ${JSON.stringify(data.metadata)}` : '';
 
     // Use single template literal to avoid multiple concatenations
-    return `${timestampStr}${levelStr}${prefixStr}${data.message}${metadataStr}`;
+    return `${timestampStr}${prefixStr}${levelStr}${data.message}${metadataStr}`;
   }
 
   setJson(json: boolean): void {

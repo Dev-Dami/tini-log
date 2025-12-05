@@ -47,15 +47,15 @@ export class Logger {
       timestamp,
       context = {},
       parent,
-      async = false,
+      async,
       customLevels = {},
       customColors = {},
     } = options;
 
-    this.asyncMode = async;
     this.parent = parent; // Set parent
     this.context = { ...context }; // Init context
     this.customLevels = customLevels; // Store custom log levels
+    this.asyncMode = false;
 
     if (this.parent) {
       this.level = level ?? this.parent.level;
@@ -86,6 +86,7 @@ export class Logger {
       this.level = level ?? "info";
       this.prefix = prefix ?? "";
       this.timestamp = timestamp ?? false;
+      this.asyncMode = async ?? false;
       this.transports = this.initTransports(
         transports.length > 0 ? transports : [{ type: "console" }],
         colorize,
