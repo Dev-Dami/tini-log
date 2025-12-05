@@ -1,88 +1,170 @@
-# Contributing to teeny-logger
+<div align="center">
 
-We welcome contributions from the community! Please follow these guidelines to ensure a smooth development process.
+<a id="top"></a>
 
-## Development Setup
+# 🤝 Contributing to dd-tinylog
 
-1.  Fork the repository on GitHub.
-2.  Clone your fork locally:
+### We're thrilled you're here and excited to see you contribute!
+
+</div>
+
+<br/>
+
+Welcome to the `dd-tinylog` community! We believe in the power of collaboration and appreciate every contribution, from a simple typo fix to a major new feature. This guide will help you get started and ensure a smooth and positive experience.
+
+<br/>
+
+![separator](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+<br/>
+
+## 💬 How You Can Contribute
+
+There are many ways to contribute to the project, and we welcome all of them!
+
+<table>
+<tr>
+<td width="25%" align="center">
+<strong>🐛 Report Bugs</strong><br/>
+<sub>Found something broken?</sub><br/>
+<a href="https://github.com/Dev-Dami/tini-log/issues/new?template=bug_report.md">Report it →</a>
+</td>
+<td width="25%" align="center">
+<strong>💡 Request Features</strong><br/>
+<sub>Have a great idea?</sub><br/>
+<a href="https://github.com/Dev-Dami/tini-log/issues/new?template=feature_request.md">Suggest it →</a>
+</td>
+<td width="25%" align="center">
+<strong>📖 Improve Docs</strong><br/>
+<sub>Found a typo?</sub><br/>
+<a href="https://github.com/Dev-Dami/tini-log/pulls">Submit PR →</a>
+</td>
+<td width="25%" align="center">
+<strong>💻 Write Code</strong><br/>
+<sub>Ready to get started?</sub><br/>
+<a href="#-development-setup">Start here →</a>
+</td>
+</tr>
+</table>
+
+<br/>
+
+![separator](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+<br/>
+
+## 🛠️ Development Setup
+
+Ready to start coding? Here’s how to set up `dd-tinylog` for local development.
+
+1.  **Fork the Repository**
+    Click the "Fork" button at the top right of the [main repository page](https://github.com/Dev-Dami/tini-log). This creates your own copy of the project.
+
+2.  **Clone Your Fork**
+    Clone your forked repository to your local machine.
     ```bash
-    git clone https://github.com/Dev-Dami/tini-log.git
+    git clone https://github.com/YOUR_USERNAME/tini-log.git
+    cd tini-log
     ```
 
-3.  Install the dependencies:
-
+3.  **Install Dependencies**
+    We use `npm` to manage project dependencies.
     ```bash
     npm install
     ```
 
-4.  Build the project:
-
+4.  **Run the Build**
+    The project is written in TypeScript and needs to be compiled into JavaScript.
     ```bash
     npm run build
     ```
 
-5.  Run the tests:
-
+5.  **Run Tests**
+    Make sure everything is working as expected by running the test suite.
     ```bash
     npm test
     ```
 
-## Project Structure
+<br/>
 
-```
-teeny-logger/
-│           
-├── docs                           # Documentation (library)
-├── src/
-│   ├── core/
-│   │   ├── Logger.ts              # Main logger class
-│   │   ├── LogLevel.ts            # constants for log levels
-│   │   ├── Formatter.ts           # Handles timestamp & message formatting
-│   │   └── Transport.ts           # Base interface for log output targets
-│   │
-│   ├── transports/
-│   │   ├── ConsoleTransport.ts    # Handles console output (colorized or not
-│   │   └── FileTransport.ts       # Handles file-based logging
-│   │
-│   ├── utils/
-│   │   ├── TimeUtil.ts            # Helper for timestamp formatting
-│   │   └── ColorUtil.ts           # Handles colorization logic
-│   │
-│   ├── types/
-│   │   └── index.d.ts             # Shared TypeScript interfaces/types
-│   │
-│   └── index.ts                   # Entry point that exports Logger and setup
-│
-├── tests/
-│   ├── core/Logger.test.ts             # Unit tests for the core logger
-│   └── transports/FileTransport.test.ts      # Tests for file logging
-│
-├── examples/
-│   ├── basic.ts                   # Simple usage example
-│   └── structured-json.ts         # Example of structured JSON logging
-│
-├── package.json
-├── tsconfig.json
-├── .eslint.json
-├── jest.config.js
-├── esbuild.config.js
-└── README.md
+## 📂 Project Structure
+
+Here's a map of the `dd-tinylog` codebase to help you find your way around.
+
+```bash
+/
+├── docs/                # 📚 Documentation files for the library
+├── src/                 # TypeScript source code
+│   ├── core/            # Core logic: Logger, Formatter, etc.
+│   ├── transports/      # Handles log output destinations (Console, File)
+│   ├── utils/           # Helper utilities (e.g., color and time formatting)
+│   ├── types/           # Shared TypeScript interfaces and type definitions
+│   └── index.ts         # Main entry point that exports the public API
+├── tests/               # ✅ Unit and integration tests
+├── examples/            # 💡 Example usage scripts
+├── package.json         # Project dependencies and scripts
+└── tsconfig.json        # TypeScript compiler configuration
 ```
 
-## Code Style
+<br/>
 
--   Write clean, readable, and well-documented code.
--   Follow the existing code style and conventions.
--   Use TypeScript for all new code.
--   Make sure your code passes the ESLint checks.
+## ✍️ Coding Guidelines
 
-## Submitting a Pull Request
+To keep the codebase consistent and easy to read, please follow these guidelines:
 
-1.  Create a new branch for your feature or bug fix.
-2.  Commit your changes with a clear and descriptive commit message.
-3.  Push your branch to your fork on GitHub.
-4.  Create a pull request to the `main` branch of the original repository.
-5.  Provide a detailed description of your changes in the pull request.
+-   **TypeScript First**: All new code should be written in TypeScript with strong typing.
+-   **Code Style**: We use ESLint and Prettier for code linting and formatting. Please run `npm run lint` and `npm run format` before committing to ensure your code matches the project's style.
+-   **Comments**: Write comments for complex logic. Well-documented code is easier for everyone to understand and maintain.
+-   **Tests**: All new features and bug fixes **must** be accompanied by tests. This ensures stability and prevents future regressions.
 
-Thank you for contributing to `teeny-logger`!
+<br/>
+
+## 🚀 Submitting a Pull Request
+
+Ready to share your work? Follow these steps to submit a pull request (PR).
+
+1.  **Create a Branch**: Start from the `main` branch and create a new, descriptive branch for your changes.
+    ```bash
+    # Example for a new feature
+    git checkout -b feat/your-awesome-feature
+
+    # Example for a bug fix
+    git checkout -b fix/bug-description
+    ```
+2.  **Commit Your Changes**: Make your changes and commit them with a descriptive message. We follow the [Conventional Commits](https://www.conventionalcommits.org/) specification, which helps us automate releases and generate changelogs.
+    -   `feat:` for new features.
+    -   `fix:` for bug fixes.
+    -   `docs:` for documentation changes.
+    -   `style:` for code style changes (formatting, etc.).
+    -   `refactor:` for code refactoring without changing functionality.
+    -   `test:` for adding or fixing tests.
+    -   `chore:` for build process or auxiliary tool changes.
+
+    ```bash
+    git commit -m "feat: add support for custom log levels with colors"
+    ```
+
+3.  **Push to Your Fork**:
+    ```bash
+    git push origin feat/your-awesome-feature
+    ```
+
+4.  **Create the Pull Request**: Open a pull request from your fork's branch to the `main` branch of the `Dev-Dami/tini-log` repository.
+
+5.  **Describe Your PR**: Provide a clear title and a detailed description of your changes. If your PR addresses an open issue, link to it (e.g., `Closes #123`).
+
+Once submitted, we'll review your PR, provide feedback, and merge it when it's ready. Thank you for your contribution!
+
+<br/>
+
+![separator](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+<br/>
+
+## 💬 Community
+
+Have questions or want to discuss ideas? Join the conversation on our [GitHub Discussions](https://github.com/Dev-Dami/tini-log/discussions) page!
+
+---
+
+By contributing, you agree that your contributions will be licensed under the **MIT License**.

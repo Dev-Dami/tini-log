@@ -230,11 +230,13 @@ Perfect for development and debugging.
 
 ```javascript
 const logger = new Logger({
-  transports: [{ 
+  transports: [{
     type: 'file',
-    filename: 'app.log',
-    maxSize: '10m',
-    maxFiles: 5
+    options: {
+      path: './logs/app.log',
+      maxSize: 10485760, // 10MB in bytes
+      maxFiles: 5
+    }
   }]
 });
 ```
@@ -635,7 +637,7 @@ describe("Logger", () => {
 | **json**       | `boolean`  | Output in JSON format   |
 | **timestamp**  | `boolean`  | Include timestamps      |
 | **prefix**     | `string`   | Prepended label         |
-| **transports** | `array`    | Where logs are written  |
+| **transports** | `array`    | Where logs are written (with transport-specific options like `path`, `maxSize`, `maxFiles` for file transport) |
 | **customLevels** | `object` | Define custom log levels and their priorities |
 | **customColors** | `object` | Assign colors to custom log levels |
 | **createChild()**    | `method`   | Creates a scoped logger |
@@ -711,7 +713,7 @@ describe("Logger", () => {
 - [x] ✅ Console & File transports
 - [x] ✅ Child loggers
 - [x] ✅ TypeScript support
-- [ ] 🔄 Log rotation
+- [x] ✅ Log rotation
 - [ ] 🔄 HTTP transport
 - [ ] 🔄 Syslog support
 
