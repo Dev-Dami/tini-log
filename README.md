@@ -2,14 +2,14 @@
 
 <a id="top"></a>
 
-# 📝 swiftlog
+# 📝 Zario
 
 ### ⚡ The Ultimate Minimal Logging Solution for Node.js
 
-[![npm version](https://img.shields.io/npm/v/dd-tinylog?style=for-the-badge&logo=npm&color=CB3837)](https://www.npmjs.com/package/dd-tinylog)
-[![license](https://img.shields.io/npm/l/dd-tinylog?style=for-the-badge&color=green)](./LICENSE)
-[![downloads](https://img.shields.io/npm/dt/dd-tinylog?style=for-the-badge&logo=npm&color=orange)](https://www.npmjs.com/package/dd-tinylog)
-[![bundle size](https://img.shields.io/bundlephobia/minzip/dd-tinylog?style=for-the-badge&logo=webpack&color=purple)](https://bundlephobia.com/package/dd-tinylog)
+[![npm version](https://img.shields.io/npm/v/zario?style=for-the-badge&logo=npm&color=CB3837)](https://www.npmjs.com/package/zario)
+[![license](https://img.shields.io/npm/l/zario?style=for-the-badge&color=green)](./LICENSE)
+[![downloads](https://img.shields.io/npm/dt/zario?style=for-the-badge&logo=npm&color=orange)](https://www.npmjs.com/package/zario)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/zario?style=for-the-badge&logo=webpack&color=purple)](https://bundlephobia.com/package/zario)
 
 <br/>
 
@@ -42,7 +42,7 @@
 ## 📦 Installation
 
 ```bash
-npm install dd-tinylog
+npm install zario
 ```
 
 <details>
@@ -50,20 +50,20 @@ npm install dd-tinylog
 
 ```bash
 # Using Yarn
-yarn add dd-tinylog
+yarn add zario
 
 # Using pnpm
-pnpm add dd-tinylog
+pnpm add zario
 
 # Using bun
-bun add dd-tinylog
+bun add zario
 ```
 </details>
 
 ### 🚀 Quick Start
 
 ```js
-import { Logger } from "dd-tinylog";
+import { Logger } from "zario";
 
 const logger = new Logger({
   level: "info",
@@ -329,7 +329,7 @@ const logger = new Logger({
 Create your own log levels with specific priorities and colors for more granular logging.
 
 ```typescript
-import { Logger } from 'dd-tinylog';
+import { Logger } from 'zario';
 
 const logger = new Logger({
   level: 'info',
@@ -433,7 +433,7 @@ childLogger.logWithLevel('child_custom', 'Defined in child');
 
 ```javascript
 import express from 'express';
-import Logger from 'dd-tinylog';
+import Logger from 'zario';
 
 const app = express();
 const logger = new Logger({ prefix: '[API]' });
@@ -465,7 +465,7 @@ app.listen(3000, () => {
 ### ⚡ Serverless Functions
 
 ```javascript
-import Logger from 'dd-tinylog';
+import Logger from 'zario';
 
 const logger = new Logger({
   level: 'info',
@@ -502,7 +502,7 @@ export async function handler(event) {
 ### 🔧 CLI Applications
 
 ```javascript
-import Logger from 'dd-tinylog';
+import Logger from 'zario';
 
 const logger = new Logger({
   colorize: true,
@@ -532,7 +532,7 @@ async function buildProject() {
 ### 🏗️ Microservices
 
 ```javascript
-import Logger from 'dd-tinylog';
+import Logger from 'zario';
 
 // Create service-specific loggers
 const userService = new Logger({
@@ -604,7 +604,7 @@ server.js
 
 ### Example logger.js:
 ```js
-import Logger from "dd-tinylog";
+import Logger from "zario";
 
 export const logger = new Logger({
   prefix: "[API]",
@@ -617,7 +617,7 @@ export const logger = new Logger({
 ## 🧪 Testing Example
 
 ```js
-import Logger from "dd-tinylog";
+import Logger from "zario";
 
 describe("Logger", () => {
   it("should log messages", () => {
@@ -788,10 +788,10 @@ Follow these steps if you want to work on the project locally:
 
 ```bash
 # Clone the repository
-git clone https://github.com/Dev-Dami/tini-log.git
+git clone https://github.com/Dev-Dami/zario.git
 
 # Navigate into the project
-cd dd-tinylog
+cd zario
 
 # Install dependencies
 npm install
@@ -809,9 +809,9 @@ npm run build
 
 <div align="center">
 
-[![GitHub Stars](https://img.shields.io/github/stars/Dev-Dami/tini-log?style=social)](../../stargazers)
-[![GitHub Forks](https://img.shields.io/github/forks/Dev-Dami/tini-log?style=social)](../../network/members)
-[![GitHub Issues](https://img.shields.io/github/issues/Dev-Dami/tini-log?style=social)](../../issues)
+[![GitHub Stars](https://img.shields.io/github/stars/Dev-Dami/zario?style=social)](../../stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/Dev-Dami/zario?style=social)](../../network/members)
+[![GitHub Issues](https://img.shields.io/github/issues/Dev-Dami/zario?style=social)](../../issues)
 
 **Join our growing community!**
 
@@ -839,7 +839,7 @@ MIT License - feel free to use this in your projects!
 
 ## 🌟 Show Your Support
 
-If **dd-tinylog** made your logging easier, consider:
+If **Zario** made your logging easier, consider:
 
 <div align="center">
 
@@ -849,7 +849,7 @@ If **dd-tinylog** made your logging easier, consider:
 
 ☕ **Buy us a coffee** to fuel development
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Dev-Dami/tini-log&type=Date)](https://star-history.com/#Dev-Dami/tini-log&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=Dev-Dami/zario&type=Date)](https://star-history.com/#Dev-Dami/zario&Date)
 
 </div>
 

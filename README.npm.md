@@ -1,17 +1,17 @@
-# SwiftLog
+# zario
 
 A minimal, fast logging library for Node.js with TypeScript support.
 
 ## Installation
 
 ```bash
-npm install swiftlog
+npm install zario
 ```
 
 ## Quick Start
 
 ```js
-import { Logger } from "swiftlog";
+import { Logger } from "zario";
 
 const logger = new Logger({
   level: "info",
@@ -93,7 +93,7 @@ const logger = new Logger({
 
 ### Basic Usage
 ```js
-import { Logger } from "swiftlog";
+import { Logger } from "zario";
 
 const logger = new Logger({
   level: "info",
@@ -112,7 +112,7 @@ const logger = new Logger({ json: true });
 
 ### Custom Levels & Colors
 ```js
-import { Logger } from "swiftlog";
+import { Logger } from "zario";
 
 const logger = new Logger({
   level: 'info',
