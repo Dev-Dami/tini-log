@@ -178,6 +178,26 @@ timer.end(); // Output: [PERFORMANCE] [INFO] Database query took 150ms
 
 The timer is idempotent - calling `end()` multiple times will only log the duration once.
 
+### 🌍 Environment Detection & Auto-Config
+
+Auto-configure based on NODE_ENV:
+
+```js
+// Development: colorized, debug level, console transport, sync mode
+process.env.NODE_ENV = 'development';
+const devLogger = new Logger();
+
+// Production: JSON, warn level, file transport, async mode
+process.env.NODE_ENV = 'production';
+const prodLogger = new Logger();
+```
+
+Auto-configuration behavior:
+- **Development**: `level: 'debug'`, `colorize: true`, `json: false`, `asyncMode: false`, `transports: [{type: 'console'}]`
+- **Production**: `level: 'warn'`, `colorize: false`, `json: true`, `asyncMode: true`, `transports: [{type: 'console'}, {type: 'file', options: {path: './logs/app.log'}}]`
+
+All settings can be overridden with explicit options.
+
 <br/>
 
 ![separator](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
