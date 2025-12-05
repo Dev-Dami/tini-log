@@ -34,11 +34,16 @@ describe('Environment Detection & Auto-Config', () => {
   let originalEnv: NodeJS.ProcessEnv;
 
   beforeEach(() => {
-    originalEnv = { ...process.env };
+    originalEnv = Object.assign({}, process.env);
   });
 
   afterEach(() => {
-    process.env = originalEnv;
+    // Clear all current environment variables
+    Object.keys(process.env).forEach(key => {
+      delete process.env[key];
+    });
+    // Restore original environment variables
+    Object.assign(process.env, originalEnv);
   });
 
   describe('Development Environment (NODE_ENV=development)', () => {
