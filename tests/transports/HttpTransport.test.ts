@@ -553,7 +553,6 @@ describe('HttpTransport', () => {
       expect(parsedBody.timestamp).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/);
     });
   });
-});
 
   describe('HTTPS Protocol Support', () => {
     it('should use https module for https URLs', async () => {
@@ -714,7 +713,7 @@ describe('HttpTransport', () => {
 
       mockHttpRequest.mockImplementation(() => {
         attemptCount++;
-        
+
         if (attemptCount === 1) {
           // First attempt fails
           const mockReq = {
@@ -761,7 +760,7 @@ describe('HttpTransport', () => {
       });
 
       const promise = transport.writeAsync(createLogData('Retry success'), formatter);
-      
+
       // Fast-forward through first retry delay
       await jest.advanceTimersByTimeAsync(1000);
 
@@ -1612,7 +1611,7 @@ describe('HttpTransport', () => {
   describe('Factory Function httpT()', () => {
     it('should create HttpTransport instance via factory function', () => {
       const { httpT } = require('../../src/transports');
-      
+
       const transport = httpT({
         url: 'http://example.com/logs'
       });
@@ -1622,7 +1621,7 @@ describe('HttpTransport', () => {
 
     it('should pass options correctly through factory function', () => {
       const { httpT } = require('../../src/transports');
-      
+
       const options: HttpTransportOptions = {
         url: 'http://example.com/logs',
         method: 'PUT',
@@ -1637,7 +1636,7 @@ describe('HttpTransport', () => {
 
     it('should throw error if factory function receives invalid options', () => {
       const { httpT } = require('../../src/transports');
-      
+
       expect(() => {
         httpT({} as any);
       }).toThrow('HttpTransport requires a URL option');
@@ -1691,7 +1690,7 @@ describe('HttpTransport', () => {
     it('should work with Logger using httpT factory', async () => {
       const { Logger } = require('../../src/core/Logger');
       const { httpT } = require('../../src/transports');
-      
+
       const mockRes = {
         statusCode: 200,
         on: jest.fn().mockImplementation((event, callback) => {
@@ -1734,7 +1733,7 @@ describe('HttpTransport', () => {
 
     it('should support async mode with Logger', async () => {
       const { Logger } = require('../../src/core/Logger');
-      
+
       const mockRes = {
         statusCode: 200,
         on: jest.fn().mockImplementation((event, callback) => {
@@ -1778,7 +1777,7 @@ describe('HttpTransport', () => {
   describe('Data Formatting', () => {
     it('should correctly format different log levels', async () => {
       const levels = ['debug', 'info', 'warn', 'error', 'fatal'];
-      
+
       for (const level of levels) {
         let capturedBody = '';
         const mockRes = {
