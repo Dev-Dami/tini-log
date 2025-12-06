@@ -8,7 +8,6 @@ import {
   ConsoleTransportOptions,
 } from "../transports";
 import { TransportConfig, LegacyTransportOptions, LogData } from "../types";
-import { consoleT, fileT } from "../transports";
 
 export interface LoggerOptions {
   level?: LogLevel;
@@ -158,9 +157,9 @@ export class Logger {
 
   private getDefaultTransports(isProd: boolean): TransportConfig[] {
     if (isProd) {
-      return [consoleT(), fileT({ path: "./logs/app.log" })];
+      return [new ConsoleTransport(), new FileTransport({ path: "./logs/app.log" })];
     } else {
-      return [consoleT()];
+      return [new ConsoleTransport()];
     }
   }
 
